@@ -20,14 +20,17 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      message:
-        "🚀 Welcome to your ISRO Satellite Assistant!
-I'm your AI-powered companion built for the Bharatiya Antariksh Hackathon, ready to explore the cosmos with you using data from MOSDAC. Whether it's accessing real-time satellite insights, analyzing space imagery, tracking Indian space missions, or answering your questions about ISRO — I’m here to assist you on your cosmic journey.
-🌌 How can I guide you today?",
+      message: `🚀 Welcome to your ISRO Satellite Assistant!
+I'm your AI-powered companion built for the Bharatiya Antariksh Hackathon, ready to explore the cosmos with you using data from MOSDAC.
+
+Whether it's accessing real-time satellite insights, analyzing space imagery, tracking Indian space missions, or answering your questions about ISRO — I’m here to assist you on your cosmic journey.
+
+🌌 How can I guide you today?`,
       isUser: false,
       timestamp: new Date().toLocaleTimeString(),
     },
   ]);
+
   const [currentMessage, setCurrentMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
