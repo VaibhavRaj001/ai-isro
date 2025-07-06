@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 210 26% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 210 26% 9%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 210 26% 9%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 25 95% 53%;
+    --primary-foreground: 210 26% 7%;
+
+    --secondary: 210 26% 12%;
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 210 26% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 25 95% 53%;
+    --accent-foreground: 210 26% 7%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 26% 18%;
+    --input: 210 26% 18%;
+    --ring: 25 95% 53%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 210 26% 7%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 210 26% 7%;
+    --sidebar-accent: 210 26% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 210 26% 18%;
+    --sidebar-ring: 25 95% 53%;
+
+    /* ISRO Color Palette */
+    --isro-navy: 210 100% 14%;
+    --isro-saffron: 25 100% 60%;
+    --isro-cosmic: 260 85% 57%;
+    --isro-teal: 180 84% 55%;
+    --isro-neon: 60 100% 75%;
+    --isro-navy-light: 210 50% 25%;
+    --isro-saffron-light: 25 80% 70%;
+  }
+
+  .dark {
+    --background: 210 26% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 210 26% 6%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 210 26% 6%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 25 95% 53%;
+    --primary-foreground: 210 26% 4%;
+
+    --secondary: 210 26% 8%;
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 210 26% 8%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 25 95% 53%;
+    --accent-foreground: 210 26% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 26% 14%;
+    --input: 210 26% 14%;
+    --ring: 25 95% 53%;
+
+    --sidebar-background: 210 26% 4%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 25 95% 53%;
+    --sidebar-primary-foreground: 210 26% 4%;
+    --sidebar-accent: 210 26% 8%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 210 26% 14%;
+    --sidebar-ring: 25 95% 53%;
+
+    /* ISRO Color Palette - Dark Mode */
+    --isro-navy: 210 100% 12%;
+    --isro-saffron: 25 100% 58%;
+    --isro-cosmic: 260 85% 60%;
+    --isro-teal: 180 84% 58%;
+    --isro-neon: 60 100% 78%;
+    --isro-navy-light: 210 50% 20%;
+    --isro-saffron-light: 25 80% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
