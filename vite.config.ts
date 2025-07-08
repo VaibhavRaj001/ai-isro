@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    allowedHosts: ['ai-isro-1.onrender.com'],
   },
   build: {
     outDir: "dist/spa",
