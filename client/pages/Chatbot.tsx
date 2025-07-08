@@ -34,12 +34,12 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
 
   const [currentMessage, setCurrentMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [streamedMessage, setStreamedMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-  const [streamedMessage, setStreamedMessage] = useState("");
 
   useEffect(() => {
     scrollToBottom();
@@ -58,12 +58,11 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
     setMessages((prev) => [...prev, userMessage]);
     setCurrentMessage("");
     setIsTyping(true);
-    setStreamedMessage(""); // reset previous
+    setStreamedMessage("");
 
     try {
       const aiResponse = await fetchAIResponse(currentMessage);
 
-      // Typewriter effect
       let i = 0;
       const interval = setInterval(() => {
         setStreamedMessage((prev) => prev + aiResponse[i]);
@@ -82,7 +81,7 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
           setStreamedMessage("");
           setIsTyping(false);
         }
-      }, 20); // 20ms per character
+      }, 20);
     } catch (err) {
       setMessages((prev) => [
         ...prev,
@@ -99,8 +98,7 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
   };
 
   return (
-    <div className="overflow-auto bg-background relative flex flex-col h-screen">
-      {/* Animated Background (Optional - leave as-is) */}
+    <div className="overflow-hidden bg-background relative flex flex-col h-dvh max-h-screen">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Stars */}
         <div className="absolute inset-0">
@@ -162,137 +160,111 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
 
         {/* Gradient Overlays */}
         <div className="absolute inset-0 bg-gradient-to-br from-isro-navy/20 via-transparent to-isro-cosmic/20"></div>
-        {/* Add stars, planets, rockets... */}
       </div>
-
       {/* Header */}
-      <header className="relative z-10 border-b border-border bg-card/80 backdrop-blur-lg">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-isro-saffron rounded-lg flex items-center justify-center shadow-lg">
-                <div className="text-isro-navy font-orbitron font-bold text-xl">🛰️</div>
-              </div>
-              <div>
-                <h1 className="text-2xl font-orbitron font-bold bg-gradient-to-r from-isro-saffron to-isro-cosmic bg-clip-text text-transparent">
-                  Bharatiya Antariksh AI Assistant
-                </h1>
-                <p className="text-sm text-muted-foreground">
-                  Intelligent Space Data Companion • MOSDAC Integration
-                </p>
-              </div>
+      <header className="relative z-10 border-b border-border bg-card/80 backdrop-blur-lg w-full px-4 py-3 md:px-6 md:py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {/* Left: Logo and Title */}
+          <div className="flex items-center gap-4 min-w-0">
+            <div className="w-10 h-10 bg-isro-saffron rounded-lg flex items-center justify-center shadow-lg">
+              <div className="text-isro-navy font-orbitron font-bold text-lg">🛰️</div>
             </div>
-            <div className="flex items-center gap-4">
-              <a href="/">
-                <Button
-                  variant="outline"
-                  className="border-isro-saffron text-isro-saffron hover:bg-isro-saffron hover:text-isro-navy transition-all duration-300 font-rajdhani font-semibold"
-                >
-                  🏠 Back to Home
-                </Button>
-              </a>
-              <div className="text-right">
-                <div className="text-sm text-muted-foreground">Live Status</div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="font-rajdhani text-sm font-semibold text-green-400">
-                    ONLINE
-                  </span>
-                </div>
-              </div>
+            <div className="truncate">
+              <h1 className="text-lg md:text-2xl font-orbitron font-bold bg-gradient-to-r from-isro-saffron to-isro-cosmic bg-clip-text text-transparent">
+                BAH 2025 AI Assistant
+              </h1>
+              <p className="text-xs text-muted-foreground truncate">
+                Ask me anything about satellites, missions, or space data
+              </p>
             </div>
+          </div>
+
+          {/* Right: Home Button and Status */}
+          <div className="w-full md:w-auto flex justify-center md:justify-end mt-4 md:mt-0">
+            <a href="/" className="shrink-0">
+              <Button
+                variant="outline"
+                className="border-isro-saffron text-isro-saffron hover:bg-isro-saffron hover:text-isro-navy transition-all duration-300 font-rajdhani font-semibold"
+              >
+                🏠 Home
+              </Button>
+            </a>
           </div>
         </div>
       </header>
 
-      {/* Main Chat Interface */}
-      <main className="relative z-10 container mx-auto px-6 py-8 flex-1 flex overflow-y-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
-          {/* Chat Area */}
-          <div className="lg:col-span-3 flex flex-col">
-            <Card className="flex flex-col bg-card/80 backdrop-blur-lg border-border/50 min-h-[calc(100vh-120px)]" style={{ height: "calc(100vh - 120px)" }}>
-              {/* Chat Header */}
-              <div className="p-6 border-b border-border bg-gradient-to-r from-isro-navy/20 to-isro-cosmic/20">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-isro-saffron flex items-center justify-center">
-                    <div className="text-isro-navy text-lg">🤖</div>
+
+      {/* Chat Section */}
+      <main className="relative z-10 w-full px-4 py-4 md:px-6 md:py-6 flex-1 flex justify-center items-center">
+        <div className="w-full max-w-4xl">
+          <Card className="w-full h-[80vh] max-h-[90vh] mx-auto flex flex-col bg-card/80 backdrop-blur-lg border border-border/50 sm:rounded-xl overflow-hidden">
+            {/* Messages */}
+            <div
+              className="flex-1 p-4 md:p-6 space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-isro-saffron scrollbar-track-background"
+              style={{ minHeight: 0 }}
+            >
+              {messages.map((msg) => (
+                <ChatMessage
+                  key={msg.id}
+                  message={msg.message}
+                  isUser={msg.isUser}
+                  timestamp={msg.timestamp}
+                  satelliteData={msg.satelliteData}
+                />
+              ))}
+
+              {streamedMessage && (
+                <ChatMessage
+                  key="streaming"
+                  message={streamedMessage}
+                  isUser={false}
+                  timestamp={new Date().toLocaleTimeString()}
+                />
+              )}
+
+              {isTyping && (
+                <div className="flex gap-3 mb-4">
+                  <div className="w-8 h-8 rounded-full bg-isro-saffron flex items-center justify-center">
+                    <div className="text-isro-navy text-sm">🤖</div>
                   </div>
-                  <div>
-                    <h3 className="font-orbitron font-bold">Space Data Assistant</h3>
-                    <p className="text-sm text-muted-foreground">
-                      Ask me anything about satellites, missions, or space data
-                    </p>
-                  </div>
-                  <div className="ml-auto flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-xs text-green-400 font-rajdhani">Active</span>
+                  <div className="bg-card border border-border rounded-lg px-4 py-3">
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 bg-isro-cosmic rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-isro-cosmic rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                      <div className="w-2 h-2 bg-isro-cosmic rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">Typing...</p>
                   </div>
                 </div>
-              </div>
+              )}
 
-              {/* Messages */}
-              <div className="p-6 space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-isro-saffron scrollbar-track-background" style={{ flex: 1, minHeight: 0 }}>
-                {messages.map((msg) => (
-                  <ChatMessage
-                    key={msg.id}
-                    message={msg.message}
-                    isUser={msg.isUser}
-                    timestamp={msg.timestamp}
-                    satelliteData={msg.satelliteData}
-                  />
-                ))}
+              <div ref={messagesEndRef} />
+            </div>
 
-                {streamedMessage && (
-                  <ChatMessage
-                    key="streaming"
-                    message={streamedMessage}
-                    isUser={false}
-                    timestamp={new Date().toLocaleTimeString()}
-                  />
-                )}
-                {isTyping && (
-                  <div className="flex gap-3 mb-4">
-                    <div className="w-8 h-8 rounded-full bg-isro-saffron flex items-center justify-center">
-                      <div className="text-isro-navy text-sm">🤖</div>
-                    </div>
-                    <div className="bg-card border border-border rounded-lg px-4 py-3">
-                      <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-isro-cosmic rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-isro-cosmic rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                        <div className="w-2 h-2 bg-isro-cosmic rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-1">Typing...</p>
-                    </div>
-                  </div>
-                )}
-                <div ref={messagesEndRef} />
+            {/* Input */}
+            <div className="px-4 py-3 md:p-6 border-t border-border bg-muted/30">
+              <div className="flex flex-nowrap items-center gap-3">
+                <input
+                  type="text"
+                  value={currentMessage}
+                  onChange={(e) => setCurrentMessage(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+                  placeholder="Ask about satellites, missions, space data, or ISRO projects..."
+                  className="flex-1 min-w-0 px-4 py-3 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-isro-saffron/50 focus:border-isro-saffron/50"
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  disabled={!currentMessage.trim()}
+                  className="whitespace-nowrap bg-isro-saffron hover:bg-isro-saffron/90 text-isro-navy px-6 font-rajdhani font-semibold"
+                >
+                  🚀 Send
+                </Button>
               </div>
-
-              {/* Input */}
-              <div className="p-6 border-t border-border bg-muted/30">
-                <div className="flex gap-3">
-                  <input
-                    type="text"
-                    value={currentMessage}
-                    onChange={(e) => setCurrentMessage(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                    placeholder="Ask about satellites, missions, space data, or ISRO projects..."
-                    className="flex-1 px-4 py-3 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-isro-saffron/50 focus:border-isro-saffron/50"
-                  />
-                  <Button
-                    onClick={handleSendMessage}
-                    disabled={!currentMessage.trim()}
-                    className="bg-isro-saffron hover:bg-isro-saffron/90 text-isro-navy px-6 font-rajdhani font-semibold"
-                  >
-                    🚀 Send
-                  </Button>
-                </div>
-                <p className="text-xs text-muted-foreground mt-2 text-center">
-                  Powered by advanced AI • Real-time MOSDAC integration • Knowledge graph analysis
-                </p>
-              </div>
-            </Card>
-          </div>
+              <p className="text-xs text-muted-foreground mt-2 text-center">
+                Powered by advanced AI • Real-time MOSDAC integration • Knowledge graph analysis
+              </p>
+            </div>
+          </Card>
         </div>
       </main>
     </div>
