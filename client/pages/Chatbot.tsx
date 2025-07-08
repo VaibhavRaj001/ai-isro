@@ -45,6 +45,7 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
     scrollToBottom();
   }, [messages]);
 
+
   const handleSendMessage = async () => {
     const message = currentMessage.trim();
     if (!message) return;
@@ -66,8 +67,14 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
 
       let i = 0;
       const interval = setInterval(() => {
+        if (i === 0) {
+          // Immediately remove "Typing..." animation
+          setIsTyping(false);
+        }
+
         setStreamedMessage((prev) => prev + aiResponse[i]);
         i++;
+
         if (i >= aiResponse.length) {
           clearInterval(interval);
           setMessages((prev) => [
@@ -80,7 +87,6 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
             },
           ]);
           setStreamedMessage("");
-          setIsTyping(false);
         }
       }, 20);
     } catch (err) {
@@ -204,12 +210,7 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
               className="flex-1 p-4 md:p-6 space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-isro-saffron scrollbar-track-background"
               style={{ minHeight: 0 }}
             >
-              {[...messages, isTyping && streamedMessage ? {
-                id: 'streaming',
-                message: streamedMessage,
-                isUser: false,
-                timestamp: new Date().toLocaleTimeString(),
-              } : null].filter(Boolean).map((msg: any) => (
+              {messages.map((msg) => (
                 <ChatMessage
                   key={msg.id}
                   message={msg.message}
@@ -219,6 +220,14 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
                 />
               ))}
 
+              {streamedMessage && (
+                <ChatMessage
+                  key="streaming"
+                  message={streamedMessage}
+                  isUser={false}
+                  timestamp={new Date().toLocaleTimeString()}
+                />
+              )}
 
               {isTyping && (
                 <div className="flex gap-3 mb-4">

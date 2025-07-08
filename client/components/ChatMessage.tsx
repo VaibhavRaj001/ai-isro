@@ -32,7 +32,7 @@ export function ChatMessage({
         <div
           className={`px-4 py-3 rounded-lg whitespace-pre-line break-words ${
             isUser
-              ? "bg-isro-saffron text-isro-navy ml-auto"
+              ? "bg-isro-saffron-light text-black ml-auto font-medium"
               : "bg-card text-foreground border border-border"
           }`}
         >
@@ -74,7 +74,7 @@ export function ChatMessage({
       </div>
 
       {isUser && (
-        <div className="w-8 h-8 rounded-full bg-isro-cosmic flex items-center justify-center flex-shrink-0">
+        <div className="w-8 h-8 rounded-full bg-isro-cosmic  flex items-center justify-center flex-shrink-0">
           <span className="text-white text-sm">👤</span>
         </div>
       )}
