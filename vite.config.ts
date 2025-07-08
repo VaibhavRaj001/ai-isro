@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    allowedHosts: ['ai-isro-1.onrender.com'], // ✅ Add this line
+    allowedHosts: ['ai-isro.vercel.app'], // ✅ Add this line
   },
   build: {
     outDir: "dist/spa",
