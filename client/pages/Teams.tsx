@@ -165,7 +165,7 @@ export default function Teams() {
                   Mission Team
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  Bharatiya Antariksh Hackathon • Space Technology Experts
+                  Bharatiya Antariksh Hackathon 2025
                 </p>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function Teams() {
                   variant="outline"
                   className="border-isro-saffron text-isro-saffron hover:bg-isro-saffron hover:text-isro-navy transition-all duration-300 font-rajdhani font-semibold"
                 >
-                  🏠 Mission Control
+                  🏠 Home
                 </Button>
               </a>
               <a href="/chatbot">
