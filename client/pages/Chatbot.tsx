@@ -46,22 +46,23 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
   }, [messages]);
 
   const handleSendMessage = async () => {
-    if (!currentMessage.trim()) return;
+    const message = currentMessage.trim();
+    if (!message) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      message: currentMessage,
+      message,
       isUser: true,
       timestamp: new Date().toLocaleTimeString(),
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setCurrentMessage("");
+    setCurrentMessage(""); // clears input
     setIsTyping(true);
     setStreamedMessage("");
 
     try {
-      const aiResponse = await fetchAIResponse(currentMessage);
+      const aiResponse = await fetchAIResponse(message);
 
       let i = 0;
       const interval = setInterval(() => {
@@ -203,7 +204,12 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
               className="flex-1 p-4 md:p-6 space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-isro-saffron scrollbar-track-background"
               style={{ minHeight: 0 }}
             >
-              {messages.map((msg) => (
+              {[...messages, isTyping && streamedMessage ? {
+                id: 'streaming',
+                message: streamedMessage,
+                isUser: false,
+                timestamp: new Date().toLocaleTimeString(),
+              } : null].filter(Boolean).map((msg: any) => (
                 <ChatMessage
                   key={msg.id}
                   message={msg.message}
@@ -213,14 +219,6 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
                 />
               ))}
 
-              {streamedMessage && (
-                <ChatMessage
-                  key="streaming"
-                  message={streamedMessage}
-                  isUser={false}
-                  timestamp={new Date().toLocaleTimeString()}
-                />
-              )}
 
               {isTyping && (
                 <div className="flex gap-3 mb-4">
@@ -248,7 +246,12 @@ Whether it's accessing real-time satellite insights, analyzing space imagery, tr
                   type="text"
                   value={currentMessage}
                   onChange={(e) => setCurrentMessage(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleSendMessage();
+                    }
+                  }}
                   placeholder="Ask about satellites, missions, space data, or ISRO projects..."
                   className="flex-1 min-w-0 px-4 py-3 bg-background border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-isro-saffron/50 focus:border-isro-saffron/50"
                 />
