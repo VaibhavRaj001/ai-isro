@@ -1,5 +1,5 @@
 export async function fetchAIResponse(message: string) {
-  const response = await fetch("https://isro-bah-2025.onrender.com/chat", {
+  const response = await fetch("https://confident-grace-production.up.railway.app/chat", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
